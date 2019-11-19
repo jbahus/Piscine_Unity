@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
 
     public static GameManager instance = null;
 
-    private int[] d01Levels = new int[] { 0, 1 };
+    private int[] d01Levels = new int[] { 1, 2 };
     public int[] currentLevels;
 
     public int levelIndex;
@@ -26,8 +26,6 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        currentLevels = d01Levels;
-        levelIndex = 0;
     }
 
     // Update is called once per frame
@@ -39,5 +37,16 @@ public class GameManager : MonoBehaviour
     public void nextLevel()
     {
         levelIndex++;
+    }
+
+    public void loadD01()
+    {
+        currentLevels = d01Levels;
+    }
+
+    public void LoadLevel(int i)
+    {
+        levelIndex = i;
+        SceneManager.LoadScene(d01Levels[levelIndex]);
     }
 }
