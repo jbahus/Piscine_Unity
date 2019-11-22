@@ -1064,6 +1064,12 @@ Transform:
   m_Father: {fileID: 974104751}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
+--- !u!1 &1270493618 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5503945529635074302, guid: 5be5c45c719616542bb717f68be2c4cd,
+    type: 3}
+  m_PrefabInstance: {fileID: 4321221857651309225}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1319001784 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6555016622044775354, guid: c66f08686d7dbc148978f861707600e2,
@@ -1543,6 +1549,36 @@ PrefabInstance:
       propertyPath: ManageCamera
       value: 
       objectReference: {fileID: 1319001784}
+    - target: {fileID: 4321221856982769242, guid: 5be5c45c719616542bb717f68be2c4cd,
+        type: 3}
+      propertyPath: levelNum
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4321221856982769242, guid: 5be5c45c719616542bb717f68be2c4cd,
+        type: 3}
+      propertyPath: dayNum
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4321221856982769242, guid: 5be5c45c719616542bb717f68be2c4cd,
+        type: 3}
+      propertyPath: pausePanel
+      value: 
+      objectReference: {fileID: 1270493618}
+    - target: {fileID: 4321221857147077685, guid: 5be5c45c719616542bb717f68be2c4cd,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4321221857147077685, guid: 5be5c45c719616542bb717f68be2c4cd,
+        type: 3}
+      propertyPath: m_Name
+      value: Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 5503945529635074302, guid: 5be5c45c719616542bb717f68be2c4cd,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5be5c45c719616542bb717f68be2c4cd, type: 3}
 --- !u!1001 &5632534560608340958

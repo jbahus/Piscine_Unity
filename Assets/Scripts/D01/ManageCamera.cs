@@ -28,7 +28,7 @@ public class ManageCamera : MonoBehaviour {
         blue.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation;
 
         currentPlayer = red;
-        offset = new Vector3(0, 0, -10);
+        offset = new Vector3(0, 2, -10);
     }
 
 	void Update () {

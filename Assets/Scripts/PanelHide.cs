@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PanelHide : MonoBehaviour
 {
+
     public void hide()
     {
         gameObject.SetActive(false);

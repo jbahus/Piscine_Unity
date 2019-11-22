@@ -17,12 +17,14 @@ public class PlayerScript_ex00 : MonoBehaviour{
     [SerializeField][Range(1, 10)]
     private float lowJumpMultiplier;
 
-    private bool grounded;
+    public bool grounded;
     [HideInInspector]
     public bool active;
+    public bool contactBottom;
 
     void Start(){
         grounded = true;
+        contactBottom = true;
     }
 
     void Awake()
@@ -30,12 +32,7 @@ public class PlayerScript_ex00 : MonoBehaviour{
         rb = GetComponent<Rigidbody2D>();
     }
 
-	void Update () {
-        if (!active)
-            return;
-    }
-
-    private void FixedUpdate()
+    private void Update()
     {
         betterJump();
 
@@ -71,7 +68,21 @@ public class PlayerScript_ex00 : MonoBehaviour{
         {
             ContactPoint2D contact = col.contacts[0];
             if (Vector2.Dot(contact.normal, Vector2.up) > 0.1)
+            {
+                contactBottom = true;
                 grounded = true;
+            }
+            else
+                contactBottom = false;
         }
+    }
+
+    void OnCollisionExit2D(Collision2D col)
+    {
+           
+        if (contactBottom && col.collider.gameObject.tag == "Player")
+            grounded = false;
+        if (contactBottom && col.collider.gameObject.tag == "Ground")
+           grounded = false;
     }
 }

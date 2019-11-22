@@ -29,6 +29,11 @@ public class LevelManager : MonoBehaviour
     private int levelToLoad;
     private bool onetimeOnly;
 
+    public int levelNum;
+    public int dayNum;
+
+    public GameObject pausePanel;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -68,7 +73,18 @@ public class LevelManager : MonoBehaviour
             onetimeOnly = false;
             fadeToLevel();
             instance.nextLevel();
+            instance.winLevel(dayNum, levelNum);
             levelToLoad = instance.currentLevels[instance.levelIndex];
+        }
+        if (Input.GetKeyDown(KeyCode.Escape) && !pausePanel.activeSelf)
+        {
+            pausePanel.GetComponent<PanelHide>().show();
+            Time.timeScale = 0;
+        }
+        else if (Input.GetKeyDown(KeyCode.Escape) && pausePanel.activeSelf)
+        {
+            pausePanel.GetComponent<PanelHide>().hide();
+            Time.timeScale = 1;
         }
     }
 
@@ -96,5 +112,11 @@ public class LevelManager : MonoBehaviour
                 blueExit = state;
                 break;
         }
+    }
+
+    public void loadMenu()
+    {
+        Time.timeScale = 1;
+        SceneManager.LoadScene(0);
     }
 }
