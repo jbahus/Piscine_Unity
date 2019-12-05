@@ -12,7 +12,9 @@ public class ManageCamera : MonoBehaviour {
 
     private GameObject  currentPlayer;
 
-    private Vector3     offset;
+    public Vector3      offset;
+
+    public Camera       camera;
 
     public void setupCamera(GameObject red, GameObject yellow, GameObject blue)
     {
@@ -51,6 +53,6 @@ public class ManageCamera : MonoBehaviour {
     }
 
 	private void LateUpdate(){
-        Camera.main.transform.position = currentPlayer.transform.position + offset;
+        camera.transform.position = currentPlayer.transform.position + offset;
 	}
 }

@@ -18,13 +18,24 @@ public class PlayerScript_ex00 : MonoBehaviour{
     private float lowJumpMultiplier;
 
     public bool grounded;
+    public int numberRaycast;
+    
+    //To not collide with himself
+    public LayerMask layer;
+
+    private Vector2 size;
+
     [HideInInspector]
     public bool active;
     public bool contactBottom;
 
+    Animator anim;
+
     void Start(){
+        anim = GetComponent<Animator>();
+        size = GetComponent<SpriteRenderer>().size;
+        layer = ~layer;
         grounded = true;
-        contactBottom = true;
     }
 
     void Awake()
@@ -42,12 +53,33 @@ public class PlayerScript_ex00 : MonoBehaviour{
         if (grounded && Input.GetKeyDown("space"))
         {
             rb.AddForce(Vector2.up * jumpForce);
-            grounded = false;
+            anim.SetTrigger("Jump");
         }
         Vector3 velocity = (Vector2.right * Input.GetAxis("Horizontal")) * speed * Time.fixedDeltaTime;
         velocity.y = rb.velocity.y;
         rb.velocity = velocity;
         
+    }
+
+    private void checkGround()
+    {
+        float step = (size.x * transform.localScale.x) / numberRaycast;
+        Vector2 startOrigin = new Vector2(transform.position.x - (size.x * transform.localScale.x) / 2, transform.position.y - (size.y * transform.localScale.y) / 2);
+
+        bool OnCastIsGround = false;
+
+        for (int i = 0; i <= numberRaycast; i++)
+        {
+            Vector2 origin = startOrigin + new Vector2(step * i, 0);
+            RaycastHit2D hit = Physics2D.Raycast(origin, Vector2.down, 100, layer);
+            Debug.DrawLine(origin, hit.point, Color.red);
+            if ((hit.point.y - origin.y >= -0.015f) && (hit.collider.tag == "Ground" || hit.collider.tag == "Player"))
+                OnCastIsGround = true;
+        }
+        if (OnCastIsGround)
+            grounded = true;
+        else
+            grounded = false;
     }
 
     void betterJump()
@@ -62,27 +94,21 @@ public class PlayerScript_ex00 : MonoBehaviour{
         }
     }
 
-    void OnCollisionEnter2D(Collision2D col)
+    void OnCollisionEnter2D(Collision2D coll)
     {
-        if (col.collider.gameObject.tag == "Ground" || col.collider.gameObject.tag == "Player")
-        {
-            ContactPoint2D contact = col.contacts[0];
+        if(coll.collider.gameObject.tag == "Ground" || coll.collider.gameObject.tag == "Player")
+         {
+            ContactPoint2D contact = coll.contacts[0];
             if (Vector2.Dot(contact.normal, Vector2.up) > 0.1)
             {
                 contactBottom = true;
                 grounded = true;
             }
-            else
-                contactBottom = false;
         }
     }
 
-    void OnCollisionExit2D(Collision2D col)
+    void OnCollisionExit2D(Collision2D coll)
     {
-           
-        if (contactBottom && col.collider.gameObject.tag == "Player")
-            grounded = false;
-        if (contactBottom && col.collider.gameObject.tag == "Ground")
-           grounded = false;
+        checkGround();
     }
 }

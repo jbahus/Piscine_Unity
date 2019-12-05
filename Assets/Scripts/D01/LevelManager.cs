@@ -8,19 +8,17 @@ public class LevelManager : MonoBehaviour
 
     GameManager instance;
 
-    private bool redExit;
-    private bool yellowExit;
-    private bool blueExit;
+    public bool redInExit;
+    public bool yellowInExit;
+    public bool blueInExit;
 
-    private GameObject red;
-    private GameObject yellow;
-    private GameObject blue;
+    public GameObject redPlayer;
+    public GameObject yellowPlayer;
+    public GameObject bluePlayer;
 
-    public GameObject playersSpawnPoint;
-    public GameObject exitsSpawnPoint;
-
-    public GameObject playersInstance;
-    public GameObject exitsInstance;
+    public GameObject redExit;
+    public GameObject yellowExit;
+    public GameObject blueExit;
 
     public GameObject ManageCamera;
 
@@ -41,34 +39,24 @@ public class LevelManager : MonoBehaviour
         animator = GetComponent<Animator>();
         onetimeOnly = true;
 
-        GameObject players = Instantiate(playersInstance);
-        GameObject exits = Instantiate(exitsInstance);
+        ManageCamera.GetComponent<ManageCamera>().setupCamera(redPlayer, yellowPlayer, bluePlayer);
 
-        red = players.transform.Find("red").gameObject;
-        yellow = players.transform.Find("yellow").gameObject;
-        blue = players.transform.Find("blue").gameObject;
+        ExitLevel exitR = redExit.GetComponent<ExitLevel>();
+        ExitLevel exitY = yellowExit.GetComponent<ExitLevel>();
+        ExitLevel exitB = blueExit.gameObject.GetComponent<ExitLevel>();
 
-        players.transform.position = playersSpawnPoint.transform.position;
-        exits.transform.position = exitsSpawnPoint.transform.position;
-
-        ManageCamera.GetComponent<ManageCamera>().setupCamera(red, yellow, blue);
-
-        ExitLevel exitR = exits.transform.Find("red_exit").gameObject.GetComponent<ExitLevel>();
-        ExitLevel exitY = exits.transform.Find("yellow_exit").gameObject.GetComponent<ExitLevel>();
-        ExitLevel exitB = exits.transform.Find("blue_exit").gameObject.GetComponent<ExitLevel>();
-
-        exitR.setPlayerName(red.name);
+        exitR.setPlayerName(redPlayer.name);
         exitR.setLevelManager(this);
-        exitY.setPlayerName(yellow.name);
+        exitY.setPlayerName(yellowPlayer.name);
         exitY.setLevelManager(this);
-        exitB.setPlayerName(blue.name);
+        exitB.setPlayerName(bluePlayer.name);
         exitB.setLevelManager(this);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (redExit && yellowExit && blueExit && onetimeOnly)
+        if (redInExit && yellowInExit && blueInExit && onetimeOnly)
         {
             onetimeOnly = false;
             fadeToLevel();
@@ -103,13 +91,13 @@ public class LevelManager : MonoBehaviour
         switch (name)
         {
             case "red":
-                redExit = state;
+                redInExit = state;
                 break;
             case "yellow":
-                yellowExit = state;
+                yellowInExit = state;
                 break;
             case "blue":
-                blueExit = state;
+                blueInExit = state;
                 break;
         }
     }
